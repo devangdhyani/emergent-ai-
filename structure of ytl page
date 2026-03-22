@@ -1,0 +1,140 @@
+"import React, { useState, useRef, useEffect } from 'react';
+import { MessageCircle, X, Send, Loader2 } from 'lucide-react';
+import { Button } from './ui/button';
+
+const Chatbot = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [messages, setMessages] = useState([
+    {
+      id: 1,
+      text: \"Hello! I'm your course assistant. Ask me anything about the Agentic AI course!\",
+      sender: 'bot',
+      timestamp: new Date()
+    }
+  ]);
+  const [inputValue, setInputValue] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const handleSendMessage = async () => {
+    if (!inputValue.trim() || isLoading) return;
+
+    const userMessage = {
+      id: Date.now(),
+      text: inputValue,
+      sender: 'user',
+      timestamp: new Date()
+    };
+
+    setMessages(prev => [...prev, userMessage]);
+    setInputValue('');
+    setIsLoading(true);
+
+    // Mock response - will be replaced with Claude API
+    setTimeout(() => {
+      const botMessage = {
+        id: Date.now() + 1,
+        text: \"This is a mock response. The chatbot will be powered by Claude Sonnet once the backend is integrated!\",
+        sender: 'bot',
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, botMessage]);
+      setIsLoading(false);
+    }, 1000);
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage();
+    }
+  };
+
+  return (
+    <>
+      {/* Floating Chat Button */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className=\"chatbot-trigger\"
+        aria-label=\"Open chat\"
+      >
+        {isOpen ? <X size={24} /> : <MessageCircle size={24} />}
+      </button>
+
+      {/* Chat Window */}
+      {isOpen && (
+        <div className=\"chatbot-window\">
+          {/* Header */}
+          <div className=\"chatbot-header\">
+            <div className=\"chatbot-header-content\">
+              <MessageCircle size={20} />
+              <div>
+                <div className=\"chatbot-title\">Course Assistant</div>
+                <div className=\"chatbot-status\">Online</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Messages */}
+          <div className=\"chatbot-messages\">
+            {messages.map((message) => (
+              <div
+                key={message.id}
+                className={`message ${message.sender === 'user' ? 'message-user' : 'message-bot'}`}
+              >
+                <div className=\"message-bubble\">
+                  {message.text}
+                </div>
+                <div className=\"message-time\">
+                  {message.timestamp.toLocaleTimeString([], { 
+                    hour: '2-digit', 
+                    minute: '2-digit' 
+                  })}
+                </div>
+              </div>
+            ))}
+            {isLoading && (
+              <div className=\"message message-bot\">
+                <div className=\"message-bubble\">
+                  <Loader2 className=\"animate-spin\" size={16} />
+                </div>
+              </div>
+            )}
+            <div ref={messagesEndRef} />
+          </div>
+
+          {/* Input */}
+          <div className=\"chatbot-input-container\">
+            <textarea
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyPress={handleKeyPress}
+              placeholder=\"Ask about the course...\"
+              className=\"chatbot-input\"
+              rows=\"1\"
+            />
+            <Button
+              onClick={handleSendMessage}
+              disabled={!inputValue.trim() || isLoading}
+              size=\"icon\"
+              className=\"chatbot-send-button\"
+            >
+              <Send size={18} />
+            </Button>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
+
+export default Chatbot;
+"
