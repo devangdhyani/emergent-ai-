@@ -1,3 +1,13 @@
+![emergernt4](https://github.com/user-attachments/assets/f13ed683-3da6-426f-96ab-a89f7e27b04b)
+
+
+
+
+![emergernt1](https://github.com/user-attachments/assets/cab73102-a5cc-463b-a396-12ddf29a92db)
+
+
+
+
 "# Agentic AI Course Landing Page
 
 A professional, modern landing page for an AI & Agentic AI tools course built for YTL Courses platform. Features a sleek dark design with red accents, comprehensive course information, and interactive elements.
@@ -78,6 +88,34 @@ A professional, modern landing page for an AI & Agentic AI tools course built fo
 └── memory/
     └── PRD.md                   # Product requirements
 ```
+
+
+
+
+
+
+
+![emergernt2](https://github.com/user-attachments/assets/9fe428cf-0489-45fc-b53a-ab1307817d14)
+
+
+
+
+
+
+
+
+
+
+![emergernt3](https://github.com/user-attachments/assets/9a5f866b-c9d1-4737-9a41-8a2392d89dfc)
+
+
+
+
+
+
+
+
+
 
 ## 🚀 Getting Started
 
